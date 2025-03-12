@@ -2,11 +2,16 @@ import { booksDatabase, generateId } from "../database/database"
 import { IBooks, IEditBook,} from "../interfaces/books.interface"
 
 export class BooksServices {
-  getBooks() {
+  getBooks(search?:string) {
+    if(search){
+      const book = booksDatabase.filter((book) => book.name.toLowerCase().includes(search.toLowerCase()) )
+      return book
+    }
     return booksDatabase
   }
 
-  getOneBook(id: string) {
+  getOneBook(id: string,) {
+    
     const findBook = booksDatabase.find((book) => book.id === Number(id))
 
     return findBook
@@ -27,12 +32,12 @@ export class BooksServices {
   }
 
   updateBook(id: number, data: IEditBook): IBooks {
-    const product = booksDatabase.find((book) => book.id === Number(id))
+    const product = booksDatabase.find((book) => book.id === Number(id)) as IBooks
 
     const updatedAt = new Date()
-    const newBook = { id, ...product, ...data, updatedAt }
+    const newBook = { ...product, ...data, updatedAt }
     const index = id - 1
-    booksDatabase.splice(index, 1, newBook)
+    booksDatabase.splice(index, 1, newBook) 
     return newBook
   }
 

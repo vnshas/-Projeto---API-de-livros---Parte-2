@@ -7,7 +7,7 @@ export class BooksControllers{
     getBooks(req:Request, res:Response):Response{
         const booksServices = new BooksServices()
 
-        const response = booksServices.getBooks()
+        const response = booksServices.getBooks(req.query.search as string)
 
         return res.status(200).json(response)
 
@@ -16,7 +16,7 @@ export class BooksControllers{
     getOneBook(req:Request, res:Response){
         const booksServices = new BooksServices()
 
-        const response = booksServices.getOneBook(req.params.id)
+        const response = booksServices.getOneBook(req.params.id,)
 
         res.status(200).json(response)
 
